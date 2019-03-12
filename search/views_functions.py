@@ -191,17 +191,23 @@ def get_search_results_count(searchfields, postfields, queryset):
     qs = get_search_results_queryset(searchfields, postfields, queryset)
     return qs.count()
 
-def build_columns_shown(columns_shown, fielddict):
+def add_to_columns_shown(columns_shown, fielddict):
     if 'columns_shown' in fielddict:
         for col in get_searchfields_dict(fielddict['columns_shown']).values():
             columns_shown[col['key']] = col
     else:
         columns_shown[fielddict['key']] = fielddict
 
-def get_search_results(searchfields, postfields, queryset, always_shown_columns=None):
+def get_search_results(searchfields, postfields, queryset, columns_shown):
     qs = get_search_results_queryset(searchfields, postfields, queryset)
+    # lista dei risultati con i filtri creati sopra
+    results = qs.values(
+        *[ x for x in columns_shown.keys() ]
+    )
+    return results
 
-    searchfields_dict = get_searchfields_dict(searchfields)
+def get_columns_shown(fields, postfields):
+    searchfields_dict = get_searchfields_dict(fields)
     # colonne da mostrare nella tabella dei risultati di ricerca
     columns_shown = OrderedDict()
     if always_shown_columns is not None:
@@ -210,12 +216,12 @@ def get_search_results(searchfields, postfields, queryset, always_shown_columns=
             if searchfield is None:
                 logger.warning('Field name %s used in always_shown_columns is not valid' % fieldname)
             else:
-                build_columns_shown(columns_shown, searchfield)
+                add_to_columns_shown(columns_shown, searchfield)
     else:
         # se non mi hanno passato always_shown_columns uso tutti i campi di ricerca
         # cio' avviene ad es. in esportazione Excel
         for searchfield in searchfields_dict.values():
-            build_columns_shown(columns_shown, searchfield)
+            add_to_columns_shown(columns_shown, searchfield)
 
     for postfield in postfields:
         fieldname = postfield['key']
@@ -223,18 +229,14 @@ def get_search_results(searchfields, postfields, queryset, always_shown_columns=
         if searchfield is None:
             continue
         # inserisco il campo nelle colonne da mostrare nella tabella dei risultati
-        build_columns_shown(columns_shown, searchfield)
+        add_to_columns_shown(columns_shown, searchfield)
 
-    # lista dei risultati con i filtri creati sopra
-    results = qs.values(
-        *[ x for x in columns_shown.keys() ]
-    )
-
-    return results, columns_shown
+    return columns_shown
 
 def get_search_response(searchfields, search_data, queryset, results_limit, always_shown_columns=None):
     postfields = json.loads(search_data)
-    records, columns_shown = get_search_results(searchfields, postfields, queryset, always_shown_columns)
+    columns_shown = get_columns_shown(searchfields, postfields)
+    records = get_search_results(searchfields, postfields, queryset, columns_shown)
 
     results_count = len(records)
     results = []
@@ -269,15 +271,21 @@ def get_search_response(searchfields, search_data, queryset, results_limit, alwa
     }
     return response
 
-def get_search_excel(searchfields, search_data, queryset):
+def get_search_excel(searchfields, search_data, queryset, excelfields=None, filename_prefix=None):
+    if excelfields is None:
+        excelfields = searchfields
+    if filename_prefix is None:
+        filename_prefix = 'search_results'
+
     postfields = json.loads(search_data)
-    results, columns_shown = get_search_results(searchfields, postfields, queryset)
+    columns_shown = get_columns_shown(excelfields, postfields)
+    results = get_search_results(searchfields, postfields, queryset, columns_shown)
     subdir = 'search'
     savedir = create_media_dir(subdir)
     clean_dir(savedir)
 
     timestamp = now()
-    filename = 'search_results_%s.xlsx' % timestamp.strftime('%Y%m%d%H%M%S%f')
+    filename = '%s_%s.xlsx' % (filename_prefix, timestamp.strftime('%Y%m%d%H%M%S%f'))
     filepath = join(savedir, filename)
 
     workbook = Workbook(filepath, {'constant_memory': True, 'tmpdir': savedir})
@@ -333,7 +341,11 @@ def get_search_excel(searchfields, search_data, queryset):
 def search_results_multiple_edit(searchfields, search_data, queryset, form_class):
     search_data = json.loads(search_data)
     form_data = QueryDict(search_data['formdata'])
-    results, columns_shown = get_search_results(searchfields, search_data['postfields'], queryset)
+
+    columns_shown = {
+        'id': field_tuple_to_dict(('id', 'ID', 'char'))
+    }
+    results = get_search_results(searchfields, search_data['postfields'], queryset, columns_shown)
     success_ids = []
     error_list = []
 
