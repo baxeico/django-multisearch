@@ -206,7 +206,7 @@ def get_search_results(searchfields, postfields, queryset, columns_shown):
     )
     return results
 
-def get_columns_shown(fields, postfields):
+def get_columns_shown(fields, postfields, always_shown_columns=None):
     searchfields_dict = get_searchfields_dict(fields)
     # colonne da mostrare nella tabella dei risultati di ricerca
     columns_shown = OrderedDict()
@@ -235,7 +235,7 @@ def get_columns_shown(fields, postfields):
 
 def get_search_response(searchfields, search_data, queryset, results_limit, always_shown_columns=None):
     postfields = json.loads(search_data)
-    columns_shown = get_columns_shown(searchfields, postfields)
+    columns_shown = get_columns_shown(searchfields, postfields, always_shown_columns)
     records = get_search_results(searchfields, postfields, queryset, columns_shown)
 
     results_count = len(records)
