@@ -7,5 +7,5 @@ if [ -z "$version" ]; then
 fi
 
 python setup.py sdist
-twine upload dist/django-search-${version}.tar.gz
-rm -rf build dist django_search.egg-info
+twine upload dist/django-multisearch-${version}.tar.gz
+rm -rf build dist django_multisearch.egg-info

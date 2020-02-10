@@ -8,5 +8,5 @@ if [ -z "$version" -o -z "$remote_server" ]; then
 fi
 
 python setup.py sdist
-scp dist/django-search-${version}.tar.gz ${remote_server}:
-rm -rf build dist django_search.egg-info
+scp dist/django-multisearch-${version}.tar.gz ${remote_server}:
+rm -rf build dist django_multisearch.egg-info
