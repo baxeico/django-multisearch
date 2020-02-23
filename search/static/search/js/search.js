@@ -1,4 +1,5 @@
 // FIXME globalone perche' usate anche da terze parti. Trovare soluzione + elegante
+var _ = strings_to_translate
 
 var buildSearchData = function() {
     var postfields = [];
@@ -179,7 +180,7 @@ $(function() {
                 var results_limit = data.results_limit;
                 if (results_count > results_limit) {
                     var alert_div = $('<div></div>').addClass('alert alert-warning').attr('role', 'alert');
-                    alert_div.html('<strong>Attenzione!</strong> La ricerca ha prodotto ' + results_count + ' risultati. Verranno mostrati solo i primi ' + results_limit + '. Puoi restringere la ricerca inserendo nuovi campi.');
+                    alert_div.html(_('1000_results', 0) + results_count + _('1000_results', 1) + results_limit + _('1000_results', 2));
                     table_container.append(alert_div);
                 }
 
@@ -328,7 +329,7 @@ $(function() {
         }
     });
     $('#last_search_copy').tooltip({
-        title: 'Indirizzo ricerca copiato, lo puoi incollare',
+        title: _('link_copied'),
         trigger: 'click',
         placement: 'top',
     });
