@@ -9,6 +9,7 @@ from collections import OrderedDict
 
 from xlsxwriter.workbook import Workbook
 
+from django.utils.translation import ugettext as _
 from django.utils import formats
 from django.conf import settings
 from django.db.models import Q, Count
@@ -292,7 +293,7 @@ def get_search_excel(searchfields, search_data, queryset, excelfields=None, file
     bold = workbook.add_format({'bold': True})
     date_format = workbook.add_format({'num_format': 'DD/MM/YYYY'})
     currency_format = workbook.add_format({'num_format': '#,##0.00'})
-    worksheet = workbook.add_worksheet('Risultati ricerca')
+    worksheet = workbook.add_worksheet(_('Search results'))
 
     headers = []
     for field in columns_shown.values():
