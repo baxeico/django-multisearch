@@ -340,7 +340,8 @@ def get_search_excel(searchfields, search_data, queryset, excelfields=None, file
     return join(settings.MEDIA_URL, subdir, filename)
 
 def search_results_multiple_edit(searchfields, search_data, queryset, form_class):
-    search_data = json.loads(search_data.decode('utf-8'))
+    # il decode('utf-8') per Py3 lo fa gia' a livello di SearchResultsMultipleEditMixin
+    search_data = json.loads(search_data)
     form_data = QueryDict(search_data['formdata'])
 
     columns_shown = {
