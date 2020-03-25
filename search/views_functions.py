@@ -235,7 +235,7 @@ def get_columns_shown(fields, postfields, always_shown_columns=None):
     return columns_shown
 
 def get_search_response(searchfields, search_data, queryset, results_limit, always_shown_columns=None):
-    postfields = json.loads(search_data)
+    postfields = json.loads(search_data.decode('utf-8'))
     columns_shown = get_columns_shown(searchfields, postfields, always_shown_columns)
     records = get_search_results(searchfields, postfields, queryset, columns_shown)
 
@@ -278,7 +278,7 @@ def get_search_excel(searchfields, search_data, queryset, excelfields=None, file
     if filename_prefix is None:
         filename_prefix = 'search_results'
 
-    postfields = json.loads(search_data)
+    postfields = json.loads(search_data.decode('utf-8'))
     columns_shown = get_columns_shown(excelfields, postfields)
     results = get_search_results(searchfields, postfields, queryset, columns_shown)
     subdir = 'search'
@@ -340,6 +340,7 @@ def get_search_excel(searchfields, search_data, queryset, excelfields=None, file
     return join(settings.MEDIA_URL, subdir, filename)
 
 def search_results_multiple_edit(searchfields, search_data, queryset, form_class):
+    # il decode('utf-8') per Py3 lo fa gia' a livello di SearchResultsMultipleEditMixin
     search_data = json.loads(search_data)
     form_data = QueryDict(search_data['formdata'])
 
