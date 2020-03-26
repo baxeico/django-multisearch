@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'django-multisearch',
-    version = '1.1.5',
+    version = '1.1.6',
     packages = find_packages(),
     author = 'Augusto Destrero',
     author_email = 'a.destrero@gmail.com',
@@ -12,4 +12,7 @@ setup(
     keywords = ['django', 'search'],
     include_package_data = True,
     zip_safe=False,
+    install_requires=[
+        'six>=1.11',
+    ]
 )
