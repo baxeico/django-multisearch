@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load static from staticfiles %}
+{% load static %}
 {% load dumpjson %}
 
 {% block title %}Ricerca {{view.page_title_suffix}}{% endblock %}
@@ -38,7 +38,7 @@ var strings_to_translate = function(s, i=null){
 
 {% block outer_content %}
 <!-- Modal -->
-<div class="modal fade" id="modal-search-action" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-search-action" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="form-search-action" class="form-horizontal" role="form" method="POST" action="">
