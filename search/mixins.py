@@ -1,4 +1,5 @@
 import json
+import logging
 import six
 
 from django.forms import modelform_factory
@@ -14,6 +15,10 @@ from crispy_forms.helper import FormHelper
 from .views_functions import search_results_multiple_edit, get_search_results_count, \
     field_dict_to_tuple
 
+
+logger = logging.getLogger(__name__)
+
+
 class SearchViewMixin(object):
 
     def get(self, request):
@@ -24,6 +29,8 @@ class SearchViewMixin(object):
         for f in searchfields[1:]:
             if isinstance(f, dict):
                 f = field_dict_to_tuple(f)
+            if f[2] == 'enum':
+                f = (f[0], f[1], f[2], [ x for x in f[3] ])
             self.searchfields.append(f)
         self.searchfields.sort(key=lambda x: x[1])
         return super(SearchViewMixin, self).get(request)
