@@ -99,6 +99,9 @@ var searchDataToWidgets = function(searchconfig) {
             if (field.hasOwnProperty('logic')) {
                 searchlogic.val(field.logic);
             }
+            if (field.hasOwnProperty('criteria')) {
+                elem.find('.criteria[data-criteria="' + field.criteria + '"]').trigger('click');
+            }
         });
     } else {
         // if the preset had no fields, add a default empty field to the search fields panel
