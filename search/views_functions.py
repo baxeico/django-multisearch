@@ -101,6 +101,7 @@ def get_search_results_queryset(searchfields, postfields, queryset):
 
         ftype = searchfield['type']
         get_q = searchfield.get('get_q')
+        and_q = searchfield.get('and_q')
 
         # creazione Q object
         if ftype == 'date':
@@ -175,6 +176,9 @@ def get_search_results_queryset(searchfields, postfields, queryset):
                     q = Q(**{'%s__%s' % (fieldname, lookup): value})
                     if negate:
                         q = ~q
+
+        if and_q:
+            q &= and_q
 
         # combino il Q object ai precedenti con una certa logica, a seconda di quanto scelto dall'utente
         if logic == 'OR':

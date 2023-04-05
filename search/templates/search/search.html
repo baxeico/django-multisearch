@@ -150,6 +150,8 @@ var strings_to_translate = function(s, i=null){
     </div>
 {% endif %}
 
+{% block pre_search_fields %}{% endblock %}
+
 <div class="row">
     <div class="col-lg-12">
         <div class="pull-right search-toolbar">
@@ -165,6 +167,8 @@ var strings_to_translate = function(s, i=null){
 
 <div class="row" id="searchfields">
 </div> <!-- /.row -->
+
+{% block post_search_fields %}{% endblock %}
 
 <div class="row">
     <div class="col-lg-12 text-center">

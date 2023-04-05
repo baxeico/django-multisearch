@@ -35,6 +35,7 @@ class SearchViewMixin(object):
         self.searchfields.sort(key=lambda x: x[1])
         return super(SearchViewMixin, self).get(request)
 
+
 class SearchResultsMultipleEditMixin(object):
     template_name_confirm = 'search/_multiple_edit_count.html'
     template_name_success = 'search/_multiple_edit_results.html'
