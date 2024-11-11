@@ -14,7 +14,6 @@ from django.utils import formats
 from django.conf import settings
 from django.db.models import Q, Count
 from django.utils.timezone import now, localtime, make_aware, make_naive, get_current_timezone
-from django.utils.encoding import force_text
 from django.http import QueryDict
 
 logger = logging.getLogger(__name__)
@@ -327,13 +326,13 @@ def get_search_excel(searchfields, search_data, queryset, excelfields=None, file
                 elif ftype == 'currency':
                     worksheet.write_number(row, col, fieldval, currency_format)
                 elif ftype in ('char', 'bool'):
-                    worksheet.write_string(row, col, force_text(fieldval))
+                    worksheet.write_string(row, col, str(fieldval))
                 elif ftype == 'enum':
-                    worksheet.write_string(row, col, force_text(field['choices_dict'].get(fieldval, '')))
+                    worksheet.write_string(row, col, str(field['choices_dict'].get(fieldval, '')))
                 elif ftype == 'num':
                     worksheet.write_number(row, col, fieldval)
             except:
-                logger.exception('Errore durante la scrittura del campo %s, %s: %s' % (key, ftype, force_text(fieldval)))
+                logger.exception('Errore durante la scrittura del campo %s, %s: %s' % (key, ftype, str(fieldval)))
                 raise
             col += 1
         row += 1
