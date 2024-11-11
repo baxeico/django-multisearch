@@ -9,7 +9,7 @@ from collections import OrderedDict
 
 from xlsxwriter.workbook import Workbook
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.utils import formats
 from django.conf import settings
 from django.db.models import Q, Count
