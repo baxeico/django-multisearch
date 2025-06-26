@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 12:34+0100\n"
+"POT-Creation-Date: 2025-06-26 15:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,19 +42,19 @@ msgstr "errori"
 msgid "select field..."
 msgstr "seleziona campo..."
 
-#: templates/search/search.html:18
+#: templates/search/search.html:13
 msgid "<strong>Attention!</strong> There are "
 msgstr "<strong>Attenzione!</strong> La ricerca ha prodotto "
 
-#: templates/search/search.html:19
+#: templates/search/search.html:14
 msgid " search results. Only first "
 msgstr " risultati. Verranno mostrati solo i primi "
 
-#: templates/search/search.html:20
+#: templates/search/search.html:15
 msgid " will be shown. You can improve your research using new fields."
 msgstr ". Puoi restringere la ricerca inserendo nuovi campi."
 
-#: templates/search/search.html:22
+#: templates/search/search.html:17
 msgid "Address copied, you can paste it."
 msgstr "Indirizzo ricerca copiato, lo puoi incollare"
 
@@ -83,49 +83,53 @@ msgid "Equal to"
 msgstr "Uguale a"
 
 #: templates/search/search.html:79
+msgid "Not equal to"
+msgstr "Diverso da"
+
+#: templates/search/search.html:80
 msgid "Between"
 msgstr "Compreso in"
 
-#: templates/search/search.html:104
+#: templates/search/search.html:105
 msgid "from"
 msgstr "da"
 
-#: templates/search/search.html:106
+#: templates/search/search.html:107
 msgid "to"
 msgstr "a"
 
-#: templates/search/search.html:131
+#: templates/search/search.html:132
 msgid "Search"
 msgstr "Ricerca"
 
-#: templates/search/search.html:138
+#: templates/search/search.html:139
 msgid "Default search"
 msgstr "Ricerche predefinite"
 
-#: templates/search/search.html:156
+#: templates/search/search.html:159
 msgid "Add search field"
 msgstr "Aggiungi campo di ricerca"
 
-#: templates/search/search.html:157
+#: templates/search/search.html:160
 msgid "Reset search"
 msgstr "Azzera ricerca"
 
-#: templates/search/search.html:159
+#: templates/search/search.html:162
 msgid "Last search"
 msgstr "Ultima ricerca"
 
-#: templates/search/search.html:172
+#: templates/search/search.html:177
 msgid "Start search"
 msgstr "Avvia ricerca"
 
-#: templates/search/search.html:177
+#: templates/search/search.html:182
 msgid "Other..."
 msgstr "Altro..."
 
-#: templates/search/search.html:181
+#: templates/search/search.html:186
 msgid "Export Excel"
 msgstr "Esporta in Excel"
 
-#: views_functions.py:296
+#: views_functions.py:300
 msgid "Search results"
 msgstr "Risultati di ricerca"

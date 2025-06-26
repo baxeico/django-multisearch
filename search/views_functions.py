@@ -76,6 +76,7 @@ def get_search_results_queryset(searchfields, postfields, queryset):
             'contains': 'icontains',
             'not_contains': '!icontains',
             'exact': 'iexact',
+            'not_exact': '!iexact',
         },
         'num': {
             'gt': 'gt',
